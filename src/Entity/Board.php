@@ -34,9 +34,9 @@ class Board
         return $emptyCells;
     }
 
-    public function setMove(array $move): void
+    public function setMove(array $move): Board
     {
         $this->content[$move['y']][$move['x']] = $move['unit'];
-        return;
+        return $this;
     }
 }
