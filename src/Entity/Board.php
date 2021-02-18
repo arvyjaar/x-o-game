@@ -4,7 +4,7 @@ namespace App\Entity;
 
 class Board
 {
-    public const BOARD_SIZE = 3;
+    private const BOARD_SIZE = 3;
     private array $content;
 
     public function __construct(array $content)
@@ -31,12 +31,14 @@ class Board
                 array_push($emptyCells, ['y' => $y, 'x' => $cell]);
             }
         }
+
         return $emptyCells;
     }
 
     public function setMove(array $move): Board
     {
         $this->content[$move['y']][$move['x']] = $move['unit'];
+
         return $this;
     }
 }

@@ -22,13 +22,15 @@ class GameController extends AbstractController
         $bot = new Bot();
 
         $afterHumanMove = $playService->play($board, $human);
-        if ($afterHumanMove) {
-            return $this->json($afterHumanMove);
+        if ($afterHumanMove['winner'] || $afterHumanMove['draw']) {
+            $response = $this->json($afterHumanMove);
         } else {
             $botMove = $bot->move($board);
             $board->setMove($botMove);
             $afterBotMove = $playService->play($board, $bot, $botMove);
-            return $this->json($afterBotMove);
+            $response = $this->json($afterBotMove);
         }
+
+        return $response;
     }
 }

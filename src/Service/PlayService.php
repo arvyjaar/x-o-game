@@ -2,12 +2,35 @@
 
 namespace App\Service;
 
-use App\Entity\Bot;
 use App\Entity\Board;
 use App\Entity\PlayerInterface;
 
 class PlayService
 {
+    public function play(Board $board, PlayerInterface $player, array $move = []): array
+    {
+        if ($this->isWinner($board, $player)) {
+            return $winner = [
+                'winner' => $player->getUnit(),
+                'draw' => false,
+                'botMove' => $move,
+            ];
+        }
+        if (count($board->getEmptyCells()) == 0) {
+            return [
+                'winner' => false,
+                'draw' => true,
+                'botMove' => [],
+            ];
+        }
+
+        return [
+            'winner' => false,
+            'draw' => false,
+            'botMove' => $move
+        ];
+    }
+
     private function checkRowsColumns(Board $board, PlayerInterface $player): bool
     {
         $reversedContent = [$board->getContent(), array_map(null, ...($board->getContent()))];
@@ -20,6 +43,7 @@ class PlayService
                 }
             }
         }
+
         return false;
     }
 
@@ -39,36 +63,12 @@ class PlayService
                 return true;
             }
         }
+
         return false;
     }
 
     private function isWinner(Board $board, PlayerInterface $player): bool
     {
         return ($this->checkRowsColumns($board, $player) || $this->checkDiagonal($board, $player)) ?: false;
-    }
-
-    public function play(Board $board, PlayerInterface $player, array $botMove = []): array
-    {
-        // check human move
-        if ($this->isWinner($board, $player)) {
-            return $winner = [
-                'winner' => [
-                    'unit' => $player->getUnit(),
-                    'moves' => [],
-                ],
-                'botMove' => $botMove,
-            ];
-        }
-        // empty cells left?
-        if (count($board->getEmptyCells()) < 1) {
-            return [
-                'draw' => true,
-                'botMove' => [],
-            ];
-        }
-        if ($player instanceof Bot) {
-            return ['botMove' => $botMove];
-        }
-        return [];
     }
 }

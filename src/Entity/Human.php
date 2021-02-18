@@ -4,7 +4,7 @@ namespace App\Entity;
 
 class Human implements PlayerInterface
 {
-    public const UNIT = 'x';
+    private const UNIT = 'x';
 
     public function getUnit(): string
     {
