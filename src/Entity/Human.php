@@ -11,7 +11,7 @@ class Human implements PlayerInterface
         return self::UNIT;
     }
 
-    public function move(object $board) : array
+    public function move(Board $board) : array
     {
         return [];
     }

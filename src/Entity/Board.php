@@ -5,7 +5,7 @@ namespace App\Entity;
 class Board
 {
     private const BOARD_SIZE = 3;
-    private array $content;
+    private $content;
 
     public function __construct(array $content)
     {

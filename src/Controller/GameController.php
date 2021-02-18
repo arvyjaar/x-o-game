@@ -19,12 +19,11 @@ class GameController extends AbstractController
         $requestContent = json_decode($request->getContent());
         $board = new Board($requestContent->board);
         $human = new Human();
-        $bot = new Bot();
-
         $afterHumanMove = $playService->play($board, $human);
         if ($afterHumanMove['winner'] || $afterHumanMove['draw']) {
             $response = $this->json($afterHumanMove);
         } else {
+            $bot = new Bot();
             $botMove = $bot->move($board);
             $board->setMove($botMove);
             $afterBotMove = $playService->play($board, $bot, $botMove);
