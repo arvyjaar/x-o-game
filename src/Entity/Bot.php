@@ -14,6 +14,9 @@ class Bot implements PlayerInterface
     public function move(Board $board): array
     {
         $emptyCells = $board->getEmptyCells();
+        if (!$emptyCells) {
+            return [];
+        }
         $move = $emptyCells[array_rand($emptyCells)] + ['unit' => self::UNIT];
 
         return  $move;

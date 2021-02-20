@@ -6,7 +6,6 @@ $(function () {
                 url: "game",
                 method: "POST",
                 data: JSON.stringify({
-                    player: playerUnit,
                     board: board,
                 }),
                 processData: false,

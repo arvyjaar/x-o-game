@@ -13,7 +13,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class GameController extends AbstractController
 {
-    #[Route('/game', name: 'game')]
+    /**
+     * @Route("/game", name="game")
+     */
     public function index(Request $request, PlayService $playService): Response
     {
         $requestContent = json_decode($request->getContent());
