@@ -11,14 +11,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class GameController extends AbstractController
+class GameController extends AbstractController implements RequestValidatedControllerInterface
 {
     /**
-     * @Route("/game", name="game")
+     * @Route("/game")
      */
     public function index(Request $request, PlayService $playService): Response
     {
         $requestContent = json_decode($request->getContent());
+
         $board = new Board($requestContent->board);
         $human = new Human();
         $afterHumanMove = $playService->play($board, $human);
