@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class RequestSubscriber implements EventSubscriberInterface
 {
-    public function onKernelController(ControllerEvent $event)
+    public function onKernelController(ControllerEvent $event): ?BadRequestException
     {
         $controller = $event->getController();
 
@@ -35,27 +35,32 @@ class RequestSubscriber implements EventSubscriberInterface
             $board = new Board([]);
             $boardSize = $board->getSize();
             $content = $requestContent->board;
-
-            if (count($content) !== $boardSize || !in_array($boardSize, array_map('count', $content), true)) {
+            $sizeViolations = [];
+            foreach ($content as $row) {
+                $sizeViolations[] = (count($row) === $boardSize) ?? false;
+            }
+            if (count($content) !== $boardSize || in_array(false, $sizeViolations)) {
                 throw new BadRequestException('Table size is not 3x3');
             }
 
             $bot = new Bot();
             $human = new Human();
             $validUnits = [$bot->getUnit(), $human->getUnit(), ''];
-            $violations = [];
+            $unitViolations = [];
             foreach ($content as $row) {
                 foreach ($row as $cell) {
-                    $violations[] = (in_array($cell, $validUnits)) ?? false;
+                    $unitViolations[] = (in_array($cell, $validUnits)) ?? false;
                 }
             }
-            if (in_array(false, $violations)) {
+            if (in_array(false, $unitViolations)) {
                 throw new BadRequestException('Table values does not meet requirements');
             }
         }
+
+        return null;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::CONTROLLER => 'onKernelController',
