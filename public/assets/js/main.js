@@ -38,6 +38,8 @@ $(function () {
                     data.botMove.y,
                     data.botMove.unit
                 );
+            }).fail(function(xhr){
+                service.finish("alert-danger", "Oops! An Error Occurred. Status code: " + xhr.status);
             });
         },
         finish: function (alertClass, message) {
