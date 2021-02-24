@@ -5,7 +5,7 @@ namespace App\Entity;
 class Board
 {
     private const BOARD_SIZE = 3;
-    private $content;
+    private array $content;
 
     public function __construct(array $content)
     {
@@ -38,6 +38,13 @@ class Board
     public function setMove(array $move): Board
     {
         $this->content[$move['y']][$move['x']] = $move['unit'];
+
+        return $this;
+    }
+
+    public function unsetMove(array $move): Board
+    {
+        $this->content[$move['y']][$move['x']] = null;
 
         return $this;
     }

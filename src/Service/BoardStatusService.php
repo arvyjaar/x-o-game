@@ -7,8 +7,8 @@ use App\Entity\PlayerInterface;
 
 class BoardStatusService
 {
-    private $board;
-    private $player;
+    private Board $board;
+    private PlayerInterface $player;
 
     public function __construct(Board $board, PlayerInterface $player)
     {

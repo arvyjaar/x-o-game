@@ -39,7 +39,7 @@ $(function () {
                     data.botMove.unit
                 );
             }).fail(function(xhr){
-                service.finish("alert-danger", "Oops! An Error Occurred. Status code: " + xhr.status);
+                service.finish("alert-danger", "Oops! An error occurred. Status code: " + xhr.status);
             });
         },
         finish: function (alertClass, message) {
