@@ -1,6 +1,7 @@
 $(function () {
     let service = {
         callApi: function (board) {
+            $("table").data("finished", true);
             let playerUnit = "x";
             $.ajax({
                 url: "game",
@@ -13,10 +14,7 @@ $(function () {
             }).done(function (data) {
                 if (!$.isEmptyObject(data.winner)) {
                     if (data.winner == playerUnit) {
-                        service.finish(
-                            "alert-success",
-                            "The game is won!"
-                        );
+                        service.finish("alert-success", "The game is won!");
                         return;
                     } else {
                         service.finish("alert-danger", "The game is lost");
@@ -30,14 +28,15 @@ $(function () {
                 }
 
                 if (data.draw) {
-                    service.finish("alert-info", "It is is draw...");
+                    service.finish("alert-info", "It is a draw...");
+                    return;
                 }
-
                 service.markBotMove(
                     data.botMove.x,
                     data.botMove.y,
                     data.botMove.unit
                 );
+                $("table").data("finished", false);
             }).fail(function(xhr){
                 service.finish("alert-danger", "Oops! An error occurred. Status code: " + xhr.status);
             });

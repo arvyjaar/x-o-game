@@ -20,16 +20,25 @@ body {
 }
 
 .middle-table-td {
-    border-left: 1px solid #dedfe6;
-    border-right: 1px solid #dee2e6;
+    border-left: 2px solid darkgray;
+    border-right: 2px solid darkgray;
+}
+
+.first-row {
+    border-bottom: 2px solid darkgray;
 }
 
 .first-row td {
     border-top: 0 none;
 }
 
+.last-row {
+    border-top: 2px solid darkgray;
+}
+
 .reset {
-    margin-top: 30px;
+    margin-top: 1em;
+    margin-bottom: 1em;
     width: 20%;
 }
 
