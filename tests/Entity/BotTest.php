@@ -71,4 +71,36 @@ class BotTest extends TestCase
         $expected = [];
         $this->assertEquals($expected, $this->bot->move($board));
     }
+
+    public function testMoveIsSmartWinning(): void
+    {
+        $content = [
+            ['', 'o', 'o'],
+            ['', '', 'x'],
+            ['x', '', ''],
+        ];
+        $board = new Board($content);
+        $expected = [
+            'y' => 0,
+            'x' => 0,
+            'unit' => 'o'
+        ];
+        $this->assertEquals($expected, $this->bot->move($board));
+    }
+
+    public function testMoveIsSmartBlocking(): void
+    {
+        $content = [
+            ['', '', 'o'],
+            ['', 'x', 'x'],
+            ['', '', ''],
+        ];
+        $board = new Board($content);
+        $expected = [
+            'y' => 1,
+            'x' => 0,
+            'unit' => 'o'
+        ];
+        $this->assertEquals($expected, $this->bot->move($board));
+    }
 }
