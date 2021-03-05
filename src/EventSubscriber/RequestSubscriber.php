@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class RequestSubscriber implements EventSubscriberInterface
 {
-    public function onKernelController(ControllerEvent $event): ?BadRequestException
+    public function onKernelController(ControllerEvent $event): void
     {
         $controller = $event->getController();
 
